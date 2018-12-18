@@ -1,0 +1,54 @@
+<?php include('header.phtml'); ?>
+    <h1>Transactor</h1>
+
+    <div class="g-recaptcha" data-sitekey="<?=$this->recaptchaSite?>"></div>
+
+    <section>
+        <h2>Your transactor code</h2>
+        <form action="/account/transactor/generate" method="post">
+            <div class="text-right">
+                <input type="submit" value="generate" class="btn btn-primary btn-block" <?php if (count($this->transactorSrc) > 0): ?>disabled<?php endif; ?>>
+            </div>
+            <input type="hidden" name="g-recaptcha-response" value="">
+        </form>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>code</th>
+                <th>src_user_id</th>
+            </tr>
+            <?php foreach ($this->transactorSrc as $values): ?>
+            <tr>
+                <td><?=$values['code']?></td>
+                <td><?=$values['src_user_id']?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+    </section>
+
+    <section>
+        <h2>Register transactor code</h2>
+        <form action="/account/transactor/register" method="post">
+            <div class="input-group">
+                <input type="text" name="code" placeholder="Enter the code of remittance destination" class="form-control">
+                <div class="input-group-append">
+                    <input type="submit" value="register" class="btn btn-primary">
+                </div>
+            </div>
+            <input type="hidden" name="g-recaptcha-response" value="">
+        </form>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>code</th>
+                <th>dst_user_id</th>
+            </tr>
+            <?php foreach ($this->transactorDst as $values): ?>
+            <tr>
+                <td><?=$values['code']?></td>
+                <td><?=$values['dst_user_id']?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+    </section>
+<?php include('footer.phtml'); ?>

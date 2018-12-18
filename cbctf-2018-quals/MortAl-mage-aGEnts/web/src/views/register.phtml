@@ -1,0 +1,8 @@
+<?php include('header.phtml'); ?>
+    <h2>Register</h2>
+    <form action="/register" method="post">
+        <input type="text" name="user_id" class="form-control" placeholder="ID" required maxlength="128">
+        <input type="password" name="password" class="form-control" placeholder="Password" required minlength="8">
+        <input type="submit" class="btn btn-primary btn-block" value="Register">
+    </form>
+<?php include('footer.phtml'); ?>

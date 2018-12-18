@@ -1,0 +1,33 @@
+version: "2"
+services:
+  db:
+    build: "./db"
+    expose:
+      - "3306"
+    volumes:
+      - "./db/migration:/docker-entrypoint-initdb.d"
+    environment:
+      MYSQL_ROOT_PASSWORD: "password" # Can't guess
+  web:
+    build: "./web"
+    ports:
+      - "80"
+    environment:
+      DB_HOST: "db"
+      ADMIN_HOST: "admin"
+      USER_KEY_SECRET: "secret" # Can't guess
+    volumes:
+      - "./web/src:/var/www"
+    depends_on:
+      - "db"
+  admin:
+    build: "./admin"
+    environment:
+      DB_HOST: "db"
+      WEB_HOST: "web"
+      USER_KEY_SECRET: "secret" # Can't guess
+    volumes:
+      - "./admin/src:/app"
+    depends_on:
+      - "db"
+      - "web"

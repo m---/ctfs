@@ -1,0 +1,43 @@
+<?php include('header.phtml'); ?>
+    <h1>Transfer</h1>
+
+    <div class="g-recaptcha" data-sitekey="<?=$this->recaptchaSite?>"></div>
+
+    <form action="/account/transfer" method="post" class="">
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Remittance destination</label>
+            <div class="col-sm-6">
+                <?php if (count($this->transactor) === 0): ?>
+                    <a href="/account/transactor" class="form-control">Register transactor</a>
+                <?php else: ?>
+                    <select name="transactor_id" class="form-control" required>
+                        <?php foreach ($this->transactor as $values): ?>
+                            <option value="<?=$values['transactor_id']?>"><?=$values['dst_user_id']?></option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Amount</label>
+            <div class="col-sm-6">
+                <div class="input-group">
+                <input type="number" name="amount" class="form-control" min="0" max="<?=$this->users['balance']?>" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">BGC</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="submit" value="Transfer" class="btn btn-primary" <?php if (count($this->transactor) === 0): ?>disabled<?php endif; ?>>
+            </div>
+        </div>
+
+        <input type="hidden" name="g-recaptcha-response" value="">
+    </form>
+<?php include('footer.phtml'); ?>

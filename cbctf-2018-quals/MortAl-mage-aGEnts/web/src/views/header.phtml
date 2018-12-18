@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        body {
+            padding-top: 5rem;
+        }
+
+        form, .g-recaptcha {
+            margin-bottom: 8px;
+        }
+    </style>
+    <script>
+        $(function () {
+            $('form[method="post"]').has('input[name="g-recaptcha-response"]').submit(function (e) {
+                var response = $('#g-recaptcha-response').val();
+                if (response === '') {
+                    e.preventDefault();
+                    alert('Missing ReCAPTCHA');
+                }
+                $('input[name="g-recaptcha-response"]', this).val(response);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="/">MortAl mage aGEnts</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <?php if ($this->isLogin): ?>
+                    <li class="nav-item"><a class="nav-link" href="/account">Account</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/account/transactor">Transactor</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/account/transfer">Transfer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                <?php else: ?>
+                    <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container">

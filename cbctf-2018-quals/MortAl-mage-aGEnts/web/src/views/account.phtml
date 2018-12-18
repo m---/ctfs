@@ -1,0 +1,46 @@
+<?php include('header.phtml'); ?>
+    <h1>Account</h1>
+
+    <div class="g-recaptcha" data-sitekey="<?=$this->recaptchaSite?>"></div>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>user_id</th>
+            <td><?=$this->users['user_id']?></td>
+        </tr>
+        <tr>
+            <th>balance</th>
+            <td><?=$this->users['balance']?> MGC</td>
+        </tr>
+        <?php if ($this->users['balance'] > 999999999): ?>
+            <tr>
+                <th>flag</th>
+                <td><?=$this->flag2?></td>
+            </tr>
+        <?php endif; ?>
+    </table>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>debit</th>
+            <th>credit</th>
+            <th>notes</th>
+        </tr>
+        <?php foreach ($this->account as $values): ?>
+            <tr>
+                <td><?=$values['debit']?></td>
+                <td><?=$values['credit']?></td>
+                <td><?=$values['notes']?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+
+    <h2>Report</h2>
+    <form action="/account/report" method="post">
+        <div class="form-group">
+            <input type="submit" value="Report to admin" class="btn btn-primary" <?php if ($this->users['reported'] === '1'): ?>disabled<?php endif; ?>>
+            <span class="text-muted">if failed transfer ;)</span>
+        </div>
+        <input type="hidden" name="g-recaptcha-response" value="">
+    </form>
+<?php include('footer.phtml'); ?>
